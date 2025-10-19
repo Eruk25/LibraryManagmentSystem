@@ -26,9 +26,11 @@ public class BookRepository : IBookRepository
         return Task.FromResult(book);
     }
 
-    public Task<Book?> CreateAsync(Book book)
+    public Task<Book?> CreateAsync(Book? book)
     {
-        var newBook = _context.Books.Count > 0 ? _context.Books.Max(b => b.Id) + 1 : 0;
+        if(book == null)
+            return Task.FromResult<Book?>(null);
+        book.Id = _context.Books.Count > 0 ? _context.Books.Max(b => b.Id) + 1 : 0;
         _context.Books.Add(book);
         return Task.FromResult(book);
     }
