@@ -26,9 +26,11 @@ public class AuthorRepository : IAuthorRepository
         return Task.FromResult(author);
     }
 
-    public Task<Author> CreateAsync(Author author)
+    public Task<Author?> CreateAsync(Author? author)
     {
-        var newAuthor = _context.Authors.Count > 0 ? _context.Authors.Max(au => au.Id) + 1 : 1;
+        if(author == null)
+            return Task.FromResult<Author?>(null);
+        author.Id = _context.Authors.Count > 0 ? _context.Authors.Max(au => au.Id) + 1 : 1;
         _context.Authors.Add(author);
         return Task.FromResult(author);
     }
