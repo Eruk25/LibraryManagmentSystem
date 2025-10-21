@@ -6,7 +6,7 @@ public interface IAuthorService
 {
     public Task<IEnumerable<Author>> GetAllAsync();
     public Task<Author?> GetByIdAsync(int id);
-    public Task<Author> CreateAsync(Author author);
-    public Task<Author?> UpdateAsync(int id, Author author);
+    public Task<Author> CreateAsync(Author entity);
+    public Task<Author?> UpdateAsync(int id, Author entity);
     public Task<bool> DeleteAsync(int id);
 }
