@@ -21,15 +21,11 @@ public class BookRepository : IBookRepository
     public Task<Book?> GetByIdAsync(int id)
     {
         var book = _context.Books.FirstOrDefault(book => book.Id == id);
-        if(book == null)
-            return Task.FromResult<Book?>(null);
         return Task.FromResult(book);
     }
 
-    public Task<Book?> CreateAsync(Book? book)
+    public Task<Book> CreateAsync(Book book)
     {
-        if(book == null)
-            return Task.FromResult<Book?>(null);
         book.Id = _context.Books.Count > 0 ? _context.Books.Max(b => b.Id) + 1 : 0;
         _context.Books.Add(book);
         return Task.FromResult(book);
