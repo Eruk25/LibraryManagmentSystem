@@ -26,17 +26,17 @@ public class AuthorService : IAuthorService
         return author;
     }
 
-    public async Task<Author> CreateAsync(Author author)
+    public async Task<Author> CreateAsync(Author entity)
     {
-        var newAuthor = await _authorRepository.CreateAsync(author);
-        if(newAuthor == null)
-            throw new ArgumentNullException(nameof(newAuthor));
+        if(entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        var newAuthor = await _authorRepository.CreateAsync(entity);
         return newAuthor;
     }
 
-    public async Task<Author?> UpdateAsync(int id, Author author)
+    public async Task<Author?> UpdateAsync(int id, Author entity)
     {
-        var newAuthor = await _authorRepository.UpdateAsync(id, author);
+        var newAuthor = await _authorRepository.UpdateAsync(id, entity);
         if(newAuthor == null)
             throw new KeyNotFoundException($"Author with id {id} not found");
         return newAuthor;
