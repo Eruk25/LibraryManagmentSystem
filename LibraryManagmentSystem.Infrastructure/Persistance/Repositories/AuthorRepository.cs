@@ -21,15 +21,11 @@ public class AuthorRepository : IAuthorRepository
     public Task<Author?> GetByIdAsync(int id)
     {
         var author = _context.Authors.FirstOrDefault(author => author.Id == id);
-        if (author == null)
-            return Task.FromResult<Author?>(null);
         return Task.FromResult(author);
     }
 
-    public Task<Author?> CreateAsync(Author? author)
+    public Task<Author> CreateAsync(Author author)
     {
-        if(author == null)
-            return Task.FromResult<Author?>(null);
         author.Id = _context.Authors.Count > 0 ? _context.Authors.Max(au => au.Id) + 1 : 1;
         _context.Authors.Add(author);
         return Task.FromResult(author);
