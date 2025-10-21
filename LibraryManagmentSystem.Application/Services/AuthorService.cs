@@ -26,9 +26,12 @@ public class AuthorService : IAuthorService
         return author;
     }
 
-    public Task<Author> CreateAsync(Author author)
+    public async Task<Author> CreateAsync(Author author)
     {
-        throw new NotImplementedException();
+        var newAuthor = await _authorRepository.CreateAsync(author);
+        if(newAuthor == null)
+            throw new ArgumentNullException(nameof(newAuthor));
+        return newAuthor;
     }
 
     public async Task<Author?> UpdateAsync(int id, Author author)
