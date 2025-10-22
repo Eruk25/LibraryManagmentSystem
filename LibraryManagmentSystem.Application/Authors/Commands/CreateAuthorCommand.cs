@@ -1,6 +1,5 @@
+using MediatR;
+
 namespace LibraryManagmentSystem.Application.Authors.Commands;
 
-public class CreateAuthorCommand
-{
-    
-}
+public record CreateAuthorCommand(int Id, string Name, DateOnly DateOfBirth) : IRequest<int>;
