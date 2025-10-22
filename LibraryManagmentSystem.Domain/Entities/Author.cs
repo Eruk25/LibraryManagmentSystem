@@ -6,14 +6,16 @@ public class Author
     public string Name { get; set; }
     public DateOnly DateOfBirth { get; set; }
 
-    public Author(string name, string birthOfDate)
+    public Author(string name, DateOnly dateOfBirth)
     {
         if(string.IsNullOrEmpty(name))
             throw new ArgumentException("Name cannot be null or empty");
-        if(string.IsNullOrEmpty(birthOfDate))
-            throw new ArgumentException("Birth of date cannot be null or empty");
+        if(DateOfBirth > DateOnly.FromDateTime(DateTime.Today))
+            throw new ArgumentException("Date of birth cannot be in the future");
+        if(dateOfBirth.Year < 1800)
+            throw new ArgumentException("Date of birth cannot be less than 1800");
         Name = name;
-        DateOfBirth = DateOnly.Parse(birthOfDate);
+        DateOfBirth = dateOfBirth;
     }
     public Author(){}
 }
