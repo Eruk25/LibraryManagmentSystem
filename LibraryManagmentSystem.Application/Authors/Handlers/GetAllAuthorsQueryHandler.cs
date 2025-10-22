@@ -1,14 +1,15 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
+using LibraryManagmentSystem.Application.Authors.Queries;
 using LibraryManagmentSystem.Domain.Entities;
 using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Handlers;
 
-public class GetAllAuthorsQueryHandler : IRequestHandler<GetAllAuthorsQuery, IEnumerable<Author>>, IRequest<IEnumerable<Author>>
+public class GetAllAuthorsQueryHandler : IRequestHandler<GetAllAuthorsQuery, IEnumerable<Author>>
 {
     private readonly IAuthorRepository _repository;
 
-    public GetAllAuthorsQuery(IAuthorRepository repository)
+    public GetAllAuthorsQueryHandler(IAuthorRepository repository)
     {
         _repository = repository;
     }
