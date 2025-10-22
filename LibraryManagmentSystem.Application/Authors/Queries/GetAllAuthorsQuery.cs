@@ -1,6 +1,6 @@
+using LibraryManagmentSystem.Domain.Entities;
+using MediatR;
+
 namespace LibraryManagmentSystem.Application.Authors.Queries;
 
-public class GetAllAuthorsQuery
-{
-    
-}
+public record GetAllAuthorsQuery() : IRequest<IEnumerable<Author>>;
