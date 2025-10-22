@@ -24,11 +24,11 @@ public class BookRepository : IBookRepository
         return Task.FromResult(book);
     }
 
-    public Task<Book> CreateAsync(Book book)
+    public Task<int> CreateAsync(Book book)
     {
         book.Id = _context.Books.Count > 0 ? _context.Books.Max(b => b.Id) + 1 : 0;
         _context.Books.Add(book);
-        return Task.FromResult(book);
+        return Task.FromResult(book.Id);
     }
 
     public Task<Book?> UpdateAsync(int id, Book book)
@@ -37,7 +37,7 @@ public class BookRepository : IBookRepository
         if (existing == null)
             return Task.FromResult<Book?>(null);
         existing.Title = book.Title;
-        existing.PublishedDate = book.PublishedDate;
+        existing.PublishedYear = book.PublishedYear;
         existing.AuthorId = book.AuthorId;
         return Task.FromResult(existing);
     }
