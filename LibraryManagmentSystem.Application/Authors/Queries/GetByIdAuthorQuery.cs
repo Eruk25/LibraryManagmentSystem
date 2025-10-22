@@ -1,6 +1,6 @@
+using LibraryManagmentSystem.Domain.Entities;
+using MediatR;
+
 namespace LibraryManagmentSystem.Application.Authors.Queries;
 
-public class GetByIdAuthorQuery
-{
-    
-}
+public record GetByIdAuthorQuery(int AuthorId) : IRequest<Author>;
