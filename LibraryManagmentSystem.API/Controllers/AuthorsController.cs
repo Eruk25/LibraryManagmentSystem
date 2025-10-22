@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagmentSystem.API.Controllers;
 
+[Controller]
+[Route("api/[controller]")]
 public class AuthorsController : ControllerBase
 {
     private readonly IAuthorService _authorService;
@@ -30,7 +32,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<AuthorResponseDto>> CreateAsync(CreateAuthorRequestDto dto)
+    public async Task<ActionResult<AuthorResponseDto>> CreateAsync([FromBody]CreateAuthorRequestDto dto)
     {
         var author = new Author
         {
