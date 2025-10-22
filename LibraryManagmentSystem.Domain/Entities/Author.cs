@@ -15,4 +15,5 @@ public class Author
         Name = name;
         DateOfBirth = DateOnly.Parse(birthOfDate);
     }
+    public Author(){}
 }
