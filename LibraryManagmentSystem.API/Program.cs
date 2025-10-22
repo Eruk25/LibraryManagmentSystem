@@ -7,6 +7,7 @@ var app = builder.Build();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
