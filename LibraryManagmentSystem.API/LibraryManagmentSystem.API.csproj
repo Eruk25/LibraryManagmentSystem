@@ -2,6 +2,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LibraryManagmentSystem.Application\LibraryManagmentSystem.Application.csproj" />
+      <ProjectReference Include="..\LibraryManagmentSystem.Infrastructure\LibraryManagmentSystem.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
