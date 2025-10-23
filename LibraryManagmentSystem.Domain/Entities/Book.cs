@@ -35,6 +35,6 @@ public class Book
     }
     private static bool IsValidYear(int year)
     {
-        return year >= 1500 && year <= DateTime.UtcNow.Year;
+        return year >= 1400 && year <= DateTime.UtcNow.Year;
     }
 }
