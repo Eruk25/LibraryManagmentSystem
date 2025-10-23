@@ -5,7 +5,7 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Books.Handlers;
 
-public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Book>
+public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, BookDto>
 {
     private readonly IBookRepository _repository;
 
@@ -14,7 +14,7 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Book>
         _repository = repository;
     }
 
-    public async Task<Book> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+    public async Task<BookDto> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
         var book = await _repository.GetByIdAsync(request.Id);
         if(book == null)
@@ -26,6 +26,6 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Book>
         if(request.AuthorId > 0)
             book.UpdateAuthor(request.AuthorId);
         await _repository.UpdateAsync(request.Id, book);
-        return book;
+        return new BookDto(book.Id, book.Title, book.PublishedYear, book.AuthorId);
     }
 }

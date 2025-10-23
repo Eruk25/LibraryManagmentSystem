@@ -5,7 +5,7 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Books.Handlers;
 
-public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, IEnumerable<Book>>
+public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, IEnumerable<BookDto>>
 {
     private readonly IBookRepository _repository;
 
@@ -14,9 +14,10 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, IEnumer
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Book>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
         var books = await _repository.GetAllAsync();
-        return books;
+        var result = books.Select(b => new BookDto(b.Id, b.Title, b.PublishedYear, b.AuthorId));
+        return result;
     }
 }
