@@ -23,8 +23,8 @@ public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, A
         if(!string.IsNullOrWhiteSpace(request.Name))
             author.UpdateName(request.Name);
         
-        if(request.DateOfBirth.HasValue)
-            author.UpdateDateOfBirth(request.DateOfBirth.Value);
+        if(!string.IsNullOrWhiteSpace(request.DateOfBirth))
+            author.UpdateDateOfBirth(DateOnly.Parse(request.DateOfBirth));
         return new AuthorDto(author.Id, author.Name, author.DateOfBirth);
     }
 }
