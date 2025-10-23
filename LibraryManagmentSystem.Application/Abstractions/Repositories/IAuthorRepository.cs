@@ -7,6 +7,6 @@ public interface IAuthorRepository
     public Task<IEnumerable<Author>> GetAllAsync();
     public Task<Author?> GetByIdAsync(int id);
     public Task<int> CreateAsync(Author author);
-    public Task<Author?> UpdateAsync(int id, Author author);
+    public Task<Author> UpdateAsync(int id, Author author);
     public Task<bool> DeleteAsync(int id);
 }
