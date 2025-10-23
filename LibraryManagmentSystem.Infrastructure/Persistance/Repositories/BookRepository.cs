@@ -26,7 +26,7 @@ public class BookRepository : IBookRepository
 
     public Task<int> CreateAsync(Book book)
     {
-        book.UpdateId(_context.Books.Count > 0 ? _context.Books.Max(b => b.Id) + 1 : 0);
+        book.GetType().GetProperty("Id")?.SetValue(book, _context.Books.Count + 1);
         _context.Books.Add(book);
         return Task.FromResult(book.Id);
     }
