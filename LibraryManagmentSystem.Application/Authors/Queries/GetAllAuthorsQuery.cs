@@ -3,4 +3,4 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Queries;
 
-public record GetAllAuthorsQuery() : IRequest<IEnumerable<Author>>;
+public record GetAllAuthorsQuery() : IRequest<IEnumerable<AuthorDto>>;

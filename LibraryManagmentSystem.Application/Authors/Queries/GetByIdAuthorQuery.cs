@@ -3,4 +3,4 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Queries;
 
-public record GetByIdAuthorQuery(int AuthorId) : IRequest<Author>;
+public record GetByIdAuthorQuery(int AuthorId) : IRequest<AuthorDto>;
