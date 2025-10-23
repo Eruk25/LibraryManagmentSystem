@@ -2,9 +2,9 @@ namespace LibraryManagmentSystem.Domain.Entities;
 
 public class Author
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public DateOnly DateOfBirth { get; set; }
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public DateOnly DateOfBirth { get; private set; }
 
     public Author(string name, DateOnly dateOfBirth)
     {
@@ -12,6 +12,12 @@ public class Author
         UpdateDateOfBirth(dateOfBirth);
     }
 
+    public void UpdateId(int id)
+    {
+        if(id <= 0)
+            throw new ArgumentException("Id cannot be less or equal to zero", nameof(id));
+        Id = id;
+    }
     public void UpdateName(string name)
     {
         if(string.IsNullOrEmpty(name))
