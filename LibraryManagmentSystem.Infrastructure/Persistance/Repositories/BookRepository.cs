@@ -31,11 +31,9 @@ public class BookRepository : IBookRepository
         return Task.FromResult(book.Id);
     }
 
-    public Task<Book?> UpdateAsync(int id, Book book)
+    public Task<Book> UpdateAsync(int id, Book book)
     {
-        var existing = _context.Books.FirstOrDefault(b => b.Id == id);
-        if (existing == null)
-            return Task.FromResult<Book?>(null);
+        var existing = _context.Books.First(b => b.Id == id);
         existing.UpdateTitle(book.Title);
         existing.UpdatePublishedYear(book.PublishedYear);
         existing.UpdateAuthor(book.AuthorId);
@@ -44,9 +42,7 @@ public class BookRepository : IBookRepository
 
     public Task<bool> DeleteAsync(int id)
     {
-        var book = _context.Books.FirstOrDefault(b => b.Id == id);
-        if (book == null)
-            return Task.FromResult(false);
+        var book = _context.Books.First(b => b.Id == id);
         _context.Books.Remove(book);
         return Task.FromResult(true);
     }
