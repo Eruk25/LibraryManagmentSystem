@@ -43,9 +43,7 @@ public class AuthorRepository : IAuthorRepository
 
     public Task<bool> DeleteAsync(int id)
     {
-        var author = _context.Authors.FirstOrDefault(author => author.Id == id);
-        if (author == null)
-            return Task.FromResult(false);
+        var author = _context.Authors.First(author => author.Id == id);
         _context.Authors.Remove(author);
         return Task.FromResult(true);
     }
