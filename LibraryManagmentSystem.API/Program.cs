@@ -1,3 +1,4 @@
+using LibraryManagmentSystem.API.Filters;
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
 using LibraryManagmentSystem.Application.Authors.Queries;
 using LibraryManagmentSystem.Application.Books.Queries;
@@ -11,7 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ApplicationContext>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    options.Filters.Add<ExceptionFilter>());
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllAuthorsQuery).Assembly)
     );
