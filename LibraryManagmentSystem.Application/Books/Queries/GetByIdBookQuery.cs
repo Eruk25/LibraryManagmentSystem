@@ -3,4 +3,4 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Books.Queries;
 
-public record GetByIdBookQuery(int Id) : IRequest<Book>;
+public record GetByIdBookQuery(int BookId) : IRequest<Book>;
