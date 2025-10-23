@@ -11,13 +11,7 @@ public class Author
         UpdateName(name);
         UpdateDateOfBirth(dateOfBirth);
     }
-
-    public void UpdateId(int id)
-    {
-        if(id <= 0)
-            throw new ArgumentException("Id cannot be less or equal to zero", nameof(id));
-        Id = id;
-    }
+    
     public void UpdateName(string name)
     {
         if(string.IsNullOrEmpty(name))
