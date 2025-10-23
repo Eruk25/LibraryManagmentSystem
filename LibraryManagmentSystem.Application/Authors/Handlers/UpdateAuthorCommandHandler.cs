@@ -5,7 +5,7 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Handlers;
 
-public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, Author>
+public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDto>
 {
     private readonly IAuthorRepository _repository;
 
@@ -14,7 +14,7 @@ public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, A
         _repository = repository;
     }
 
-    public async Task<Author> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<AuthorDto> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
     {
         var author = await _repository.GetByIdAsync(request.Id);
         if(author == null)
@@ -25,6 +25,6 @@ public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, A
         
         if(request.DateOfBirth.HasValue)
             author.UpdateDateOfBirth(request.DateOfBirth.Value);
-        return author;
+        return new AuthorDto(author.Id, author.Name, author.DateOfBirth);
     }
 }
