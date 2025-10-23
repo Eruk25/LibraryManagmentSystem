@@ -26,7 +26,7 @@ public class AuthorRepository : IAuthorRepository
 
     public Task<int> CreateAsync(Author author)
     {
-        author.Id = _context.Authors.Count > 0 ? _context.Authors.Max(au => au.Id) + 1 : 1;
+        author.UpdateId(_context.Authors.Count > 0 ? _context.Authors.Max(au => au.Id) + 1 : 1);
         _context.Authors.Add(author);
         return Task.FromResult(author.Id);
     }
@@ -36,8 +36,8 @@ public class AuthorRepository : IAuthorRepository
         var existing = _context.Authors.FirstOrDefault(au => au.Id == id);
         if (existing == null)
             return Task.FromResult<Author?>(null);
-        existing.Name = author.Name;
-        existing.DateOfBirth = author.DateOfBirth;
+        existing.UpdateName(author.Name);
+        existing.UpdateDateOfBirth(author.DateOfBirth);
         return Task.FromResult(existing);  
     }
 
