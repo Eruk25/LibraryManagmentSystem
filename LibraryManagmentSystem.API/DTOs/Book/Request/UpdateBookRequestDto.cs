@@ -5,8 +5,8 @@ namespace LibraryManagmentSystem.API.DTOs;
 
 public record UpdateBookRequestDto(
     [param: StringLength(30, MinimumLength = 3, ErrorMessage = "Title cannot exceed 30 characters.")]
-    string? Title,
+    string? Title = null,
     [param: YearRange(1400)]
-    int PublishedYear,
+    int? PublishedYear = null,
     [param: PositiveId()]
-    int AuthorId);
+    int? AuthorId = null);
