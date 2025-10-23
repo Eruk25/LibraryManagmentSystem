@@ -20,7 +20,7 @@ public class AuthorRepository : IAuthorRepository
 
     public Task<Author?> GetByIdAsync(int id)
     {
-        var author = _context.Authors.FirstOrDefault(author => author.Id == id);
+        var author = _context.Authors.FirstOrDefault(au => au.Id == id);
         return Task.FromResult(author);
     }
 
@@ -31,19 +31,17 @@ public class AuthorRepository : IAuthorRepository
         return Task.FromResult(author.Id);
     }
 
-    public Task<Author?> UpdateAsync(int id, Author author)
+    public Task<Author> UpdateAsync(int id, Author author)
     {
-        var existing = _context.Authors.FirstOrDefault(au => au.Id == id);
-        if (existing == null)
-            return Task.FromResult<Author?>(null);
+        var existing = _context.Authors.First(au => au.Id == id);
         existing.UpdateName(author.Name);
         existing.UpdateDateOfBirth(author.DateOfBirth);
-        return Task.FromResult(existing);  
+        return Task.FromResult(existing);
     }
 
     public Task<bool> DeleteAsync(int id)
     {
-        var author = _context.Authors.First(author => author.Id == id);
+        var author = _context.Authors.First(au => au.Id == id);
         _context.Authors.Remove(author);
         return Task.FromResult(true);
     }
