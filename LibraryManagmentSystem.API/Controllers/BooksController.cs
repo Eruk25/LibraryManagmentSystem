@@ -44,7 +44,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> CreateAsync(CreateBookRequestDto dto)
+    public async Task<ActionResult<int>> CreateAsync([FromBody]CreateBookRequestDto dto)
     {
         var response = await _mediator.Send(new CreateBookCommand(
             dto.Title,
