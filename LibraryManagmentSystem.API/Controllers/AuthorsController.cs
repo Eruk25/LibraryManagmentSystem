@@ -44,6 +44,8 @@ public class AuthorsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<int>> CreateAsync([FromBody]CreateAuthorRequestDto dto)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
         var result = await _mediator.Send(new CreateAuthorCommand(
             dto.Name,
             DateOnly.Parse(dto.DateOfBirth)));
@@ -53,10 +55,14 @@ public class AuthorsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<AuthorResponseDto>> UpdateAsync(int id, UpdateAuthorRequestDto dto)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var result = await _mediator.Send(new UpdateAuthorCommand(
             id,
             dto.Name,
             dto.DateOfBirth));
+        
         var response = new AuthorResponseDto(
             result.Id,
             result.Name,

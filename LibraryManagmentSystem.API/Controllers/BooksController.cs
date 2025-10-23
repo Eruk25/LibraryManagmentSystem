@@ -46,26 +46,35 @@ public class BooksController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<int>> CreateAsync([FromBody]CreateBookRequestDto dto)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var response = await _mediator.Send(new CreateBookCommand(
             dto.Title,
             dto.PublishedYear,
             dto.AuthorId));
+        
         return Ok(response);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<BookResponseDto>> UpdateAsync(int id, UpdateBookRequestDto dto)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
         var book = await _mediator.Send(new UpdateBookCommand(
             id,
             dto.Title,
             dto.PublishedYear,
             dto.AuthorId));
+        
         var response = new BookResponseDto(
             book.Id,
             book.Title,
             book.PublisherYear,
             book.AuthorId);
+        
         return Ok(response);
     }
 
