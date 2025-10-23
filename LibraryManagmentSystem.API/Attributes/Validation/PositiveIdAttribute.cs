@@ -9,9 +9,9 @@ public class PositiveIdAttribute : ValidationAttribute
         if(value == null)
             return ValidationResult.Success;
         if (!int.TryParse(value.ToString(), out int id))
-            return new ValidationResult("Year must be a number.");
+            return new ValidationResult("AuthorId must be a number.");
         if(id <= 0)
-            return new ValidationResult("Year must be greater than zero.");
+            return new ValidationResult("AuthorId must be greater than zero.");
         return ValidationResult.Success;
     }
 }
