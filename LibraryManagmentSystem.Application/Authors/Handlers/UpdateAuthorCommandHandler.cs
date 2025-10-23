@@ -21,10 +21,10 @@ public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, A
             throw new KeyNotFoundException($"Author with id {request.Id} not found");
         
         if(!string.IsNullOrWhiteSpace(request.Name))
-            author.Name = request.Name;
+            author.UpdateName(request.Name);
         
         if(request.DateOfBirth.HasValue)
-            author.DateOfBirth = request.DateOfBirth.Value;
+            author.UpdateDateOfBirth(request.DateOfBirth.Value);
         return author;
     }
 }
