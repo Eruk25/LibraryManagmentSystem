@@ -14,6 +14,13 @@ public class Book
         UpdatePublishedYear(publishedYear);
         UpdateAuthor(authorId);
     }
+
+    public void UpdateId(int newId)
+    {
+        if(newId <= 0)
+            throw new ArgumentException("Id cannot be less or equal to zero", nameof(newId));
+        Id = newId;
+    }
     public void UpdateTitle(string title)
     {
         if(string.IsNullOrEmpty(title))
