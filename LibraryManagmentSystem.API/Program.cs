@@ -1,5 +1,6 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
 using LibraryManagmentSystem.Application.Authors.Queries;
+using LibraryManagmentSystem.Application.Books.Queries;
 using LibraryManagmentSystem.Infrastructure.Persistance.DB;
 using LibraryManagmentSystem.Infrastructure.Persistance.Repositories;
 
@@ -14,6 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllAuthorsQuery).Assembly)
     );
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(GetAllBooksQuery).Assembly)
+);
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
