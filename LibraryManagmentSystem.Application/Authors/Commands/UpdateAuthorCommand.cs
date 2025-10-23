@@ -3,4 +3,4 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Commands;
 
-public record UpdateAuthorCommand(int Id, string? Name, DateOnly? DateOfBirth) : IRequest<AuthorDto>; 
+public record UpdateAuthorCommand(int Id, string? Name, string? DateOfBirth) : IRequest<AuthorDto>; 
