@@ -2,4 +2,4 @@ using MediatR;
 
 namespace LibraryManagmentSystem.Application.Authors.Commands;
 
-public record CreateAuthorCommand(int Id, string Name, DateOnly DateOfBirth) : IRequest<int>;
+public record CreateAuthorCommand(string Name, DateOnly DateOfBirth) : IRequest<int>;
