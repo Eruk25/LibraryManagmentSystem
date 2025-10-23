@@ -53,7 +53,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<AuthorResponseDto>> UpdateAsync(int id, UpdateAuthorRequestDto dto)
+    public async Task<ActionResult<AuthorResponseDto>> UpdateAsync(int id, [FromBody]UpdateAuthorRequestDto dto)
     {
         if(!ModelState.IsValid)
             return BadRequest(ModelState);

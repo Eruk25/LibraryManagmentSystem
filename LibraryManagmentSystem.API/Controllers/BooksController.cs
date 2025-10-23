@@ -58,7 +58,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<BookResponseDto>> UpdateAsync(int id, UpdateBookRequestDto dto)
+    public async Task<ActionResult<BookResponseDto>> UpdateAsync(int id, [FromBody]UpdateBookRequestDto dto)
     {
         if(!ModelState.IsValid)
             return BadRequest(ModelState);
