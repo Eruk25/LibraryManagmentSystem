@@ -1,5 +1,6 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
 using LibraryManagmentSystem.Application.Authors.Commands;
+using LibraryManagmentSystem.Application.Books;
 using LibraryManagmentSystem.Domain.Entities;
 using MediatR;
 
@@ -25,6 +26,12 @@ public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, A
         
         if(!string.IsNullOrWhiteSpace(request.DateOfBirth))
             author.UpdateDateOfBirth(DateOnly.Parse(request.DateOfBirth));
-        return new AuthorDto(author.Id, author.Name, author.DateOfBirth);
+        return new AuthorDto(
+            author.Id,
+            author.Name,
+            author.DateOfBirth,
+            author.Books.Select(b => 
+                new BookDto(b.Id, b.Title, b.PublishedYear, b.AuthorId)
+            ).ToList());
     }
 }
