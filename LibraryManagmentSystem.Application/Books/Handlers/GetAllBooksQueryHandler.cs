@@ -16,7 +16,7 @@ public class GetAllBooksQueryHandler : IRequestHandler<GetAllBooksQuery, IEnumer
 
     public async Task<IEnumerable<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
-        var books = await _repository.GetAllAsync();
+        var books = await _repository.GetAllAsync(request.Filters);
         var result = books.Select(b => new BookDto(b.Id, b.Title, b.PublishedYear, b.AuthorId));
         return result;
     }
