@@ -35,6 +35,7 @@ public class AuthorRepository : IAuthorRepository
     public async Task<int> CreateAsync(Author author)
     {
         await _context.Authors.AddAsync(author);
+        await _context.SaveChangesAsync();
         return author.Id;
     }
 
@@ -43,13 +44,17 @@ public class AuthorRepository : IAuthorRepository
         var existing = await _context.Authors.FirstAsync(au => au.Id == id);
         existing.UpdateName(author.Name);
         existing.UpdateDateOfBirth(author.DateOfBirth);
+        await _context.SaveChangesAsync();
         return existing;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var author = await _context.Authors.FirstAsync(au => au.Id == id);
+        var author = await _context.Authors.FirstOrDefaultAsync(au => au.Id == id);
+        if(author == null)
+            return false;
         _context.Authors.Remove(author);
+        await _context.SaveChangesAsync();
         return true;
     }
 }
