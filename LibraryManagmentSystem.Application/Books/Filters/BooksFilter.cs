@@ -1,3 +1,5 @@
 namespace LibraryManagmentSystem.Application.Books.Filters;
 
-public record BooksFilter();
+public record BooksFilter(
+    int? PublishedYearFrom,
+    int? PublishedYearTo);
