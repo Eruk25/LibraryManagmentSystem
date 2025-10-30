@@ -1,49 +1,51 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
 using LibraryManagmentSystem.Domain.Entities;
 using LibraryManagmentSystem.Infrastructure.Persistance.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagmentSystem.Infrastructure.Persistance.Repositories;
 
 public class BookRepository : IBookRepository
 {
-    private readonly ApplicationContext _context;
+    private readonly LibraryContext _context;
 
-    public BookRepository(ApplicationContext context)
+    public BookRepository(LibraryContext context)
     {
         _context = context;
     }
     
-    public Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAllAsync()
     {
-        return Task.FromResult(_context.Books.AsEnumerable());
+        return await _context.Books
+            .ToListAsync();
     }
 
-    public Task<Book?> GetByIdAsync(int id)
+    public async Task<Book?> GetByIdAsync(int id)
     {
-        var book = _context.Books.FirstOrDefault(book => book.Id == id);
-        return Task.FromResult(book);
+        var book = await _context.Books
+            .FirstOrDefaultAsync(book => book.Id == id);
+        return book;
     }
 
-    public Task<int> CreateAsync(Book book)
+    public async Task<int> CreateAsync(Book book)
     {
-        book.GetType().GetProperty("Id")?.SetValue(book, _context.Books.Count + 1);
-        _context.Books.Add(book);
-        return Task.FromResult(book.Id);
+        await _context.Books.AddAsync(book);
+        return book.Id;
     }
 
-    public Task<Book> UpdateAsync(int id, Book book)
+    public async Task<Book> UpdateAsync(int id, Book book)
     {
-        var existing = _context.Books.First(b => b.Id == id);
+        var existing = await _context.Books.FirstAsync(b => b.Id == id);
         existing.UpdateTitle(book.Title);
         existing.UpdatePublishedYear(book.PublishedYear);
         existing.UpdateAuthor(book.AuthorId);
-        return Task.FromResult(existing);
+        return existing;
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        var book = _context.Books.First(b => b.Id == id);
+        var book = await _context.Books.FirstAsync(b => b.Id == id);
         _context.Books.Remove(book);
-        return Task.FromResult(true);
+        return true;
     }
 }
