@@ -4,12 +4,14 @@ using LibraryManagmentSystem.Application.Authors.Queries;
 using LibraryManagmentSystem.Application.Books.Queries;
 using LibraryManagmentSystem.Infrastructure.Persistance.DB;
 using LibraryManagmentSystem.Infrastructure.Persistance.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ApplicationContext>();
+builder.Services.AddDbContext<LibraryContext>(option =>
+    option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddControllers(options =>
