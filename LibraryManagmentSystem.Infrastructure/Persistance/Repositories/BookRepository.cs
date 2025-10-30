@@ -1,5 +1,7 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
+using LibraryManagmentSystem.Application.Books.Filters;
 using LibraryManagmentSystem.Domain.Entities;
+using LibraryManagmentSystem.Infrastructure.Extenstions.Books;
 using LibraryManagmentSystem.Infrastructure.Persistance.DB;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +16,10 @@ public class BookRepository : IBookRepository
         _context = context;
     }
     
-    public async Task<IEnumerable<Book>> GetAllAsync()
+    public async Task<IEnumerable<Book>> GetAllAsync(BooksFilter filters)
     {
         return await _context.Books
+            .ApplyFilter(filters)
             .ToListAsync();
     }
 
