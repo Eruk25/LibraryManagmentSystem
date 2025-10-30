@@ -1,3 +1,5 @@
 namespace LibraryManagmentSystem.Application.Authors.Filters;
 
-public record AuthorsFilter();
+public record AuthorsFilter(
+    int? QuantityBooks,
+    string? AuthorName);
