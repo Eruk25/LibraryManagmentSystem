@@ -1,7 +1,9 @@
 using LibraryManagmentSystem.API.DTOs;
+using LibraryManagmentSystem.API.DTOs.Book.Filters;
 using LibraryManagmentSystem.API.DTOs.Book.Response;
 using LibraryManagmentSystem.Application.Books;
 using LibraryManagmentSystem.Application.Books.Commands;
+using LibraryManagmentSystem.Application.Books.Filters;
 using LibraryManagmentSystem.Application.Books.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +22,13 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<BookResponseDto>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<BookResponseDto>>> GetAllAsync([FromQuery]BookFilterQueryDto filtersDto)
     {
-        var books = await _mediator.Send(new GetAllBooksQuery());
+        var filters = new BooksFilter(
+            filtersDto.PublishedYearFrom,
+            filtersDto.PublishedYearTo);
+        
+        var books = await _mediator.Send(new GetAllBooksQuery(filters));
         var response = books.Select(b => new BookResponseDto(
             b.Id,
             b.Title,
