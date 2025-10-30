@@ -1,3 +1,5 @@
 namespace LibraryManagmentSystem.API.DTOs.Author.Filters;
 
-public record AuthorFilterQueryDto();
+public record AuthorFilterQueryDto(
+    int? QuantityBooks,
+    string? AuthorName);
