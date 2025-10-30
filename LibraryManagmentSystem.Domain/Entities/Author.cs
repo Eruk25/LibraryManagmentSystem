@@ -5,6 +5,7 @@ public class Author
     public int Id { get; private set; }
     public string Name { get; private set; }
     public DateOnly DateOfBirth { get; private set; }
+    public IEnumerable<Book> Books { get; private set; }
 
     public Author(string name, DateOnly dateOfBirth)
     {
