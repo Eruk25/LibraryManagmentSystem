@@ -1,7 +1,11 @@
 using LibraryManagmentSystem.API.DTOs;
+using LibraryManagmentSystem.API.DTOs.Author.Filters;
 using LibraryManagmentSystem.API.DTOs.Author.Response;
+using LibraryManagmentSystem.API.DTOs.Book.Response;
 using LibraryManagmentSystem.Application.Authors.Commands;
+using LibraryManagmentSystem.Application.Authors.Filters;
 using LibraryManagmentSystem.Application.Authors.Queries;
+using LibraryManagmentSystem.Application.Books.Filters;
 using LibraryManagmentSystem.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +23,21 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AuthorResponseDto>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<AuthorResponseDto>>> GetAllAsync([FromQuery]AuthorFilterQueryDto filtersDto)
     {
-        var authors = await _mediator.Send(new GetAllAuthorsQuery());
+        var filters = new AuthorsFilter(
+            filtersDto.QuantityBooks,
+            filtersDto.AuthorName);
+        
+        var authors = await _mediator.Send(new GetAllAuthorsQuery(filters));
         var response = authors
             .Select(a => new AuthorResponseDto(
-            a.Id,
-            a.Name,
-            a.DateOfBirth.ToString("dd/MM/yyyy")));
+                a.Id,
+                a.Name,
+                a.DateOfBirth.ToString("dd/MM/yyyy"),
+                a.Books.Select(b =>
+                    new BookResponseDto(b.Id, b.Title, b.PublisherYear, b.AuthorId)
+                ).ToList()));
         return Ok(response);
     }
 
@@ -37,7 +48,10 @@ public class AuthorsController : ControllerBase
         var response = new AuthorResponseDto(
             author.Id,
             author.Name,
-            author.DateOfBirth.ToString("dd/MM/yyyy"));
+            author.DateOfBirth.ToString("dd/MM/yyyy"),
+            author.Books.Select(b =>
+                new BookResponseDto(b.Id, b.Title, b.PublisherYear, b.AuthorId)
+            ).ToList());
         return Ok(response);
     }
 
@@ -53,7 +67,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<AuthorResponseDto>> UpdateAsync(int id, [FromBody]UpdateAuthorRequestDto dto)
+    public async Task<ActionResult<UpdateAuthorResponseDto>> UpdateAsync(int id, [FromBody]UpdateAuthorRequestDto dto)
     {
         if(!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -63,7 +77,7 @@ public class AuthorsController : ControllerBase
             dto.Name,
             dto.DateOfBirth));
         
-        var response = new AuthorResponseDto(
+        var response = new UpdateAuthorResponseDto(
             result.Id,
             result.Name,
             result.DateOfBirth.ToString("dd/MM/yyyy"));
