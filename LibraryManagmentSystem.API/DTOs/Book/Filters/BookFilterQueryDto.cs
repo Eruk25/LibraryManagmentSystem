@@ -1,6 +1,5 @@
-namespace LibraryManagmentSystem.API.DTOs.Author.Filters;
+namespace LibraryManagmentSystem.API.DTOs.Book.Filters;
 
 public record BookFilterQueryDto(
-    int PublishedYearFrom,
-    int PublishedYearTo
-    );
+    int? PublishedYearFrom,
+    int? PublishedYearTo);
