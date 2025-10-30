@@ -1,5 +1,7 @@
 using LibraryManagmentSystem.Application.Abstractions.Repositories;
+using LibraryManagmentSystem.Application.Authors.Filters;
 using LibraryManagmentSystem.Domain.Entities;
+using LibraryManagmentSystem.Infrastructure.Extenstions.Authors;
 using LibraryManagmentSystem.Infrastructure.Persistance.DB;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +16,11 @@ public class AuthorRepository : IAuthorRepository
         _context = context;
     }
     
-    public async Task<IEnumerable<Author>> GetAllAsync()
+    public async Task<IEnumerable<Author>> GetAllAsync(AuthorsFilter filters)
     {
         return await _context.Authors
             .Include(au => au.Books)
+            .ApplyFilter(filters)
             .ToListAsync();
     }
 
