@@ -33,6 +33,7 @@ public class BookRepository : IBookRepository
     public async Task<int> CreateAsync(Book book)
     {
         await _context.Books.AddAsync(book);
+        await _context.SaveChangesAsync();
         return book.Id;
     }
 
@@ -42,13 +43,17 @@ public class BookRepository : IBookRepository
         existing.UpdateTitle(book.Title);
         existing.UpdatePublishedYear(book.PublishedYear);
         existing.UpdateAuthor(book.AuthorId);
+        await _context.SaveChangesAsync();
         return existing;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var book = await _context.Books.FirstAsync(b => b.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+        if(book == null)
+            return false;
         _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
         return true;
     }
 }
